@@ -1,47 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculator_Project</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Calculator with Currency Converter</title>
+<link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <div class="calculator_full">
-        <div class="display" id="display"></div>
-        <div class="all_buttons">
-            <button class="buttons" onclick="press('7')">7</button>
-            <button class="buttons" onclick="press('8')">8</button>
-            <button class="buttons" onclick="press('9')">9</button>
-            <button class="buttons" onclick="press('/')">&divide;</button>
-        </div>
-        <div class="all_buttons">
-            <button class="buttons" onclick="press('4')">4</button>
-            <button class="buttons" onclick="press('5')">5</button>
-            <button class="buttons" onclick="press('6')">6</button>
-            <button class="buttons" onclick="press('*')">&times;</button>
-        </div>
-        <div class="all_buttons">
-            <button class="buttons" onclick="press('1')">1</button>
-            <button class="buttons" onclick="press('2')">2</button>
-            <button class="buttons" onclick="press('3')">3</button>
-            <button class="buttons" onclick="press('+')">+</button>
-        </div>
-        <div class="all_buttons">
-            <button class="buttons" onclick="clearDisplay()">C</button>
-            <button class="buttons" onclick="press('0')">0</button>
-            <button class="buttons" onclick="calculate()">=</button>
-            <button class="buttons" onclick="press('-')">&minus;</button>
-        </div>
-
-        <!-- Currency Converter Section -->
-         <div class="all_buttons">
-            <button class="letters" onclick="handleCurrencyConversion('KES')">KES</button>
-            <button class="letters" onclick="handleCurrencyConversion('EUR')">EUR</button>
-            <button class="letters" onclick="handleCurrencyConversion('GBP')">GBP</button>
-            <button class="letters" onclick="handleCurrencyConversion('INR')">INR</button>
-         </div>
+  <div class="calculator_full">
+    <div class="display" id="display"></div>
+    <div class="all_buttons">
+      <button class="buttons">7</button>
+      <button class="buttons">8</button>
+      <button class="buttons">9</button>
+      <button class="buttons">&divide;</button>
     </div>
-    <script src="functionality.js"></script>
+    <div class="all_buttons">
+      <button class="buttons">4</button>
+      <button class="buttons">5</button>
+      <button class="buttons">6</button>
+      <button class="buttons">&times;</button>
+    </div>
+    <div class="all_buttons">
+      <button class="buttons">1</button>
+      <button class="buttons">2</button>
+      <button class="buttons">3</button>
+      <button class="buttons">+</button>
+    </div>
+    <div class="all_buttons">
+      <button class="buttons clear">C</button>
+      <button class="buttons zero">0</button>
+      <button class="buttons equals">=</button>
+      <button class="buttons">−</button>
+    </div>
+
+    <!-- Currency Converter Section -->
+    <div class="all_buttons">
+      <button class="letters">KES</button>
+      <button class="letters">EUR</button>
+      <button class="letters">GBP</button>
+      <button class="letters">INR</button>
+    </div>
+  </div>
+
+  <script src="functionality.js"></script>
 </body>
 </html>
+
