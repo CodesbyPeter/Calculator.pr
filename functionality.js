@@ -1,28 +1,38 @@
 // Getting the display
 let display = document.getElementById('display');
 
+// Store the selected currency for conversion when user presses a currency button
+let selectedCurrency = null;
+
 // Making the press function active
 function press(key) {
     display.innerText += key;
 }
 
-// console.log(key);
-
 // Making the calculate function active
-function calculate() {
+async function calculate() {
     try {
-    // Use of eval to calculate the expressions
-    let result = eval(display.innerText);
-    display.innerText = result;
- }
-    catch (error) {
+        // If a currency conversion is selected, convert after evaluating the expression
+        let expressionResult = eval(display.innerText);
+        if (selectedCurrency) {
+            display.innerText = 'Converting...';
+            const rate = await fetchExchangeRate(selectedCurrency);
+            const converted = (expressionResult * rate).toFixed(2);
+            display.innerText = `${converted} ${selectedCurrency}`;
+            selectedCurrency = null; // Reset currency after conversion
+        } else {
+            display.innerText = expressionResult;
+        }
+    } catch (error) {
         display.innerText = 'Error';
+        selectedCurrency = null; // Reset in case of error
     }
 }
 
 // Making the clearDisplay function active
 function clearDisplay() {
     display.innerText = '';
+    selectedCurrency = null; // Reset currency too
 }
 
 // Simulating Async Exchange Rate Fetch
@@ -40,72 +50,32 @@ async function fetchExchangeRate(currency) {
     });
 }
 
-// Buttons functionality
-const buttons = document.querySelectorAll('.buttons button');
+// Standard button functionality for calculator buttons (digits, operators, =, C)
+const buttons = document.querySelectorAll('.buttons');
 
-// Standard button functionality
 buttons.forEach(button => {
-  button.addEventListener('click', () => {
-    const value = button.textContent;
+    button.addEventListener('click', async () => {
+        const value = button.textContent;
 
-    if (value === '=') {
-      try {
-        display.value = eval(display.value);
-      } catch {
-        display.value = 'Error';
-      }
-    } else if (value === 'C') {
-      display.value = '';
-    } else if (!value.startsWith('to')) {
-      display.value += value;
-    }
-  });
+        if (value === '=') {
+            await calculate();
+        } else if (value === 'C') {
+            clearDisplay();
+        } else {
+            press(value);
+        }
+    });
 });
 
-// Currency conversion logic
-function setupCurrencyButton(buttonId, currencyCode, symbol) {
-  const btn = document.getElementById(buttonId);
-  btn.addEventListener('click', async () => {
-    const amount = parseFloat(display.value);
+// Currency buttons set selectedCurrency but do NOT trigger conversion yet
+const currencyButtons = document.querySelectorAll('.letters');
 
-    if (isNaN(amount) || amount <= 0) {
-      display.value = 'Invalid $ amount';
-      return;
-    }
-
-    display.value = 'Fetching...';
-
-    try {
-      const rate = await fetchExchangeRate(currencyCode);
-      const result = amount * rate;
-      display.value = `${symbol} ${result.toFixed(2)}`;
-    } catch {
-      display.value = 'Error';
-    }
-  });
-}
-
-// Setup 4 currency buttons
-setupCurrencyButton('toKES', 'KES', 'KES');
-setupCurrencyButton('toEUR', 'EUR', '€');
-setupCurrencyButton('toGBP', 'GBP', '£');
-setupCurrencyButton('toINR', 'INR', '₹');
+currencyButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        selectedCurrency = button.textContent; // Set selected currency for conversion
+    });
+});
 
 
-// Javascript onclick functionality
-async function handleCurrencyConversion(currency) {
-    const currentValue = parseFloat(display.value);
-  
-    if (isNaN(currentValue)) {
-      display.value = 'Enter number';
-      return;
-    }
-  
-    display.value = 'Converting...'; // show loading message
-  
-    const rate = await fetchExchangeRate(currency);
-    const converted = (currentValue * rate).toFixed(2);
-  
-    display.value = `${converted} ${currency}`;
-  }
+
   
